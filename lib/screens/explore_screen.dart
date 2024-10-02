@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:parks/models/park.dart';
-import 'package:parks/widgets/explore/bottom_nav_bar.dart';
 import 'package:parks/widgets/explore/explore_search_bar.dart';
 import 'package:parks/widgets/explore/park_card_list.dart';
 
@@ -37,7 +36,6 @@ class ExploreScreen extends StatelessWidget {
               Expanded(
                 child: ParksCardList(parks: parks),
               ),
-              const BottomNavBar(),
             ],
           ),
         ),
