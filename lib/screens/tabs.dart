@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parks/assets/custom_bottom_nav_bar.dart';
 import 'package:parks/screens/saved_screen.dart';
 import 'package:parks/screens/screens.dart';
 import 'explore_screen.dart';
@@ -38,30 +39,9 @@ class _TabsScreenState extends State<TabsScreen> {
           ProfileScreen(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Community',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Saved',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        elevation: 10,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        // selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
+      bottomNavigationBar: CustomBottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }

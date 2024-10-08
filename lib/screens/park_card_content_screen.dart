@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parks/buttons/custom_back_button.dart';
-import 'package:parks/buttons/custom_save_button.dart';
+import 'package:parks/assets/custom_back_button.dart';
+import 'package:parks/assets/custom_save_button.dart';
 import 'package:parks/models/park.dart';
 
 class ParkCardContentScreen extends StatelessWidget {
