@@ -39,8 +39,6 @@ class _TabsScreenState extends State<TabsScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.explore),
@@ -59,8 +57,10 @@ class _TabsScreenState extends State<TabsScreen> {
             label: 'Profile',
           ),
         ],
+        elevation: 10,
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        // selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
     );
