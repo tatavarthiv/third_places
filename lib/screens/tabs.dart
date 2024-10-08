@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parks/screens/saved_screen.dart';
 import 'package:parks/screens/screens.dart';
 import 'explore_screen.dart';
 
@@ -30,8 +31,8 @@ class _TabsScreenState extends State<TabsScreen> {
             _selectedIndex = index;
           });
         },
-        children: [
-          const ExploreScreen(),
+        children: const [
+          ExploreScreen(),
           CommunityScreen(),
           SavedScreen(),
           ProfileScreen(),

@@ -11,11 +11,13 @@ class ExploreScreen extends StatelessWidget {
     // Sample park data
     final List<Park> parks = [
       Park(
+          id: '1',
           name: 'Greenwood Park',
           location: 'New York, NY',
           imageUrl:
               'https://images.squarespace-cdn.com/content/v1/5fe120bdfce3cd3cca992359/1610954254015-SPCW0G52IND5A1V1AZ8B/mg_9574-small-1091x488.jpg'),
       Park(
+          id: '2',
           name: 'Lakeside Park',
           location: 'Chicago, IL',
           imageUrl:

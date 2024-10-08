@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:parks/buttons/custom_back_button.dart';
+import 'package:parks/buttons/custom_save_button.dart';
 import 'package:parks/models/park.dart';
 
 class ParkCardContentScreen extends StatelessWidget {
@@ -9,36 +11,51 @@ class ParkCardContentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(park.name),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              park.name,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            // Text(
-            //   park.description,
-            //   style: TextStyle(fontSize: 16),
-            // ),
-            const SizedBox(height: 16),
-            Text(
-              'Location: ${park.location}',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 16),
-            // Text(
-            //   'Opening Hours: ${park.openingHours}',
-            //   style: TextStyle(fontSize: 16),
-            // ),
-            // Add more park details here
-          ],
-        ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Image.network(
+                park.imageUrl,
+                width: double.infinity,
+                height: 250,
+                fit: BoxFit.cover,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 250),
+                      Text(
+                        park.name,
+                        style: const TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Location: ${park.location}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Positioned(
+            top: 55,
+            left: 16,
+            child: CustomBackButton(),
+          ),
+          Positioned(
+            top: 55,
+            right: 16,
+            child: CustomSaveParkButton(park: park),
+          ),
+        ],
       ),
     );
   }
