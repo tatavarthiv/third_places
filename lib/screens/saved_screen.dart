@@ -13,6 +13,7 @@ class SavedScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saved Parks'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: savedParks.isEmpty
           ? const Center(child: Text('No saved parks yet.'))

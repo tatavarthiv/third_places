@@ -3,8 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parks/screens/tabs.dart';
 import 'package:parks/theme/theme.dart';
 import 'package:parks/util.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase/firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     const ProviderScope(
       child: MyApp(),

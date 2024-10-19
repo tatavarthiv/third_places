@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:parks/assets/custom_bottom_nav_bar.dart';
+import 'package:parks/assets/buttons/custom_bottom_nav_bar.dart';
+import 'package:parks/screens/community_screen.dart';
+import 'package:parks/screens/profile_screen.dart';
 import 'package:parks/screens/saved_screen.dart';
-import 'package:parks/screens/screens.dart';
 import 'explore_screen.dart';
 
 class TabsScreen extends StatefulWidget {
