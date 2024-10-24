@@ -1,41 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:parks/firebase/firestore_service.dart';
-import 'package:parks/models/park.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parks/widgets/explore/explore_search_bar.dart';
 import 'package:parks/widgets/explore/park_card_list.dart';
+import 'package:parks/providers/park_data_provider.dart';
 
-class ExploreScreen extends StatelessWidget {
+class ExploreScreen extends ConsumerWidget {
   const ExploreScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Access park data from the provider
+    final parksData = ref.watch(parksProvider);
+
     return Scaffold(
-        body: SafeArea(
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context)
-              .unfocus(); // Unfocus search bar and dismiss keyboard
-        },
-        child: Column(children: [
-          const ExploreSearchBar(),
-          Expanded(
-            child: FutureBuilder<List<Park>>(
-                future: ParkService().getParks(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (snapshot.hasData) {
-                    final parks = snapshot.data!;
-                    return ParksCardList(parks: parks);
-                  } else {
-                    return const Center(child: Text('No parks found.'));
-                  }
-                }),
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context)
+                .unfocus(); // Unfocus search bar and dismiss keyboard
+          },
+          child: Column(
+            children: [
+              const ExploreSearchBar(),
+              Expanded(
+                child: parksData.when(
+                  data: (parks) => ParksCardList(parks: parks),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (error, _) => Center(child: Text('Error: $error')),
+                ),
+              ),
+            ],
           ),
-        ]),
+        ),
       ),
-    ));
+    );
   }
 }
