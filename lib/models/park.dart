@@ -1,14 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Park {
   final String id;
   final String name;
   final String location;
   final String imageUrl;
+  final GeoPoint coordinates;
 
   Park({
     required this.id,
     required this.name,
     required this.location,
     required this.imageUrl,
+    required this.coordinates,
   });
 
   factory Park.fromJson(Map<String, dynamic> json) {
@@ -17,6 +21,10 @@ class Park {
       name: json['name'],
       location: json['location'],
       imageUrl: json['imageUrl'],
+      coordinates: GeoPoint(
+        json['latitude'] ?? 0.0,
+        json['longitude'] ?? 0.0,
+      ),
     );
   }
 
@@ -36,6 +44,7 @@ class Park {
       name: data['name'] ?? '',
       location: data['location'] ?? '',
       imageUrl: data['imageUrl'] ?? '',
+      coordinates: data['coordinates'] ?? const GeoPoint(0.0, 0.0),
     );
   }
 }
