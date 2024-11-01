@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -57,8 +58,23 @@ class ProfileScreen extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                // Handle logout
+              onTap: () async {
+                try {
+                  await FirebaseAuth.instance.signOut();
+                  // Optional: Show success message
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Successfully logged out')),
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text('Error logging out: ${e.toString()}')),
+                    );
+                  }
+                }
               },
             ),
           ],
