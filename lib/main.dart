@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parks/screens/tabs.dart';
+import 'package:parks/assets/authentication/auth_gate.dart';
 import 'package:parks/theme/theme.dart';
 import 'package:parks/util.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      home: const TabsScreen(),
+      home: const AuthGate(),
     );
   }
 }
