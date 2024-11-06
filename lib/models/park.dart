@@ -17,10 +17,10 @@ class Park {
 
   factory Park.fromJson(Map<String, dynamic> json) {
     return Park(
-      id: json['id'],
-      name: json['name'],
-      location: json['location'],
-      imageUrl: json['imageUrl'],
+      id: json['id'] ?? '',
+      name: json['name'] ?? 'Unknown Park',
+      location: json['location'] ?? '',
+      imageUrl: json['imageUrl'] ?? 'https://st3.depositphotos.com/1186248/14351/i/450/depositphotos_143511907-stock-photo-not-available-rubber-stamp.jpg',
       coordinates: GeoPoint(
         json['latitude'] ?? 0.0,
         json['longitude'] ?? 0.0,
@@ -41,9 +41,9 @@ class Park {
   factory Park.fromFirestore(Map<String, dynamic> data) {
     return Park(
       id: data['id'] ?? '',
-      name: data['name'] ?? '',
+      name: data['name'] ?? 'Unknown Park',
       location: data['location'] ?? '',
-      imageUrl: data['imageUrl'] ?? '',
+      imageUrl: data['imageUrl'] ?? 'https://st3.depositphotos.com/1186248/14351/i/450/depositphotos_143511907-stock-photo-not-available-rubber-stamp.jpg',
       coordinates: data['coordinates'] ?? const GeoPoint(0.0, 0.0),
     );
   }
