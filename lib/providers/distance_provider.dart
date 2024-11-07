@@ -19,9 +19,7 @@ final distanceProvider = FutureProvider.family<String, Park>((ref, park) async {
     }
 
     // Get the current position
-    Position currentPosition = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+    Position currentPosition = await Geolocator.getCurrentPosition();
 
     double calculatedDistance = DistanceCalculator.calculateDistance(
       startLatitude: currentPosition.latitude,
