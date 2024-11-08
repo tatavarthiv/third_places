@@ -44,7 +44,7 @@ class ExploreHeader extends ConsumerWidget {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.filter_list,
+                      Icons.tune,
                       color: colorScheme.onSurfaceVariant,
                     ),
                     onPressed: () => _showFilters(context),
