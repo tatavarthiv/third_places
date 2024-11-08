@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parks/assets/custom_save_button.dart';
 import 'package:parks/models/park.dart';
+import 'package:parks/providers/distance_provider.dart';
 import 'package:parks/screens/park_card_content_screen.dart';
 
-class ParkCard extends StatelessWidget {
+class ParkCard extends ConsumerWidget {
   final Park park;
 
   const ParkCard({super.key, required this.park});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final distanceValue = ref.watch(distanceProvider(park));
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -21,6 +26,15 @@ class ParkCard extends StatelessWidget {
       },
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          side: BorderSide(
+            color: colorScheme.outline.withOpacity(0.3),
+            width: 1,
+          ),
+        ),
+        elevation: 4,
+        shadowColor: Colors.black.withOpacity(0.4),
         child: Stack(
           children: [
             Column(
@@ -39,20 +53,56 @@ class ParkCard extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        park.name,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              park.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    color: colorScheme.primary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          distanceValue.when(
+                            data: (distance) => Text(
+                              '$distance mi · Local park',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    color: colorScheme.primary,
+                                    fontSize: 11,
+                                  ),
+                            ),
+                            loading: () => const SizedBox(
+                              width: 12,
+                              height: 12,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                            error: (_, __) => const Text('--'),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 8.0),
+                      const SizedBox(height: 4),
                       Text(
                         park.location,
-                        style:
-                            const TextStyle(fontSize: 16, color: Colors.grey),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: colorScheme.primary,
+                              fontSize: 12,
+                            ),
                       ),
                     ],
                   ),
