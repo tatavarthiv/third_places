@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:parks/data/dummy_events.dart';
+import 'package:parks/widgets/community/event_card.dart';
 
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
@@ -6,74 +8,123 @@ class CommunityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Community'),
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
-        body: Column(
-          children: [
-            // Scrollable row for upcoming events
-            SizedBox(
-              height: 100.0,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: List.generate(10, (index) {
-                  return Container(
-                    width: 100.0,
-                    margin: const EdgeInsets.all(8.0),
-                    color: Theme.of(context).primaryColor,
-                    child: Center(
-                      child: Text(
-                        'Event ${index + 1}',
-                        style: const TextStyle(color: Colors.white),
+        body: SafeArea(
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          'Community',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                        ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'Your Upcoming Events',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 180,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          itemCount: upcomingEvents.length,
+                          itemBuilder: (context, index) {
+                            return EventCard(
+                              event: upcomingEvents[index],
+                              isSmall: true,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SliverAppBarDelegate(
+                    TabBar(
+                      tabs: const [
+                        Tab(text: 'Community Events'),
+                        Tab(text: 'Events by Friends'),
+                      ],
+                      labelColor: Theme.of(context).colorScheme.primary,
+                      unselectedLabelColor:
+                          Theme.of(context).colorScheme.onSurfaceVariant,
+                      indicatorColor: Theme.of(context).colorScheme.primary,
                     ),
-                  );
-                }),
-              ),
-            ),
-            // Tab bar
-            TabBar(
-              indicatorColor: Theme.of(context).primaryColor,
-              labelColor: Theme.of(context).primaryColor,
-              unselectedLabelColor: Colors.grey,
-              labelStyle: const TextStyle(fontSize: 12.0),
-              unselectedLabelStyle: const TextStyle(fontSize: 12.0),
-              tabs: const [
-                Tab(text: 'Your Community'),
-                Tab(text: 'City Events'),
-                Tab(text: 'Events by Friends'),
+                  ),
+                ),
+              ];
+            },
+            body: TabBarView(
+              children: [
+                _CommunityEventsTab(),
+                const Center(child: Text('Coming Soon')),
               ],
             ),
-            // Tab bar view
-            Expanded(
-              child: TabBarView(
-                children: [
-                  _buildTabContent(context, 'Your Community'),
-                  _buildTabContent(context, 'City Events'),
-                  _buildTabContent(context, 'Events by Friends'),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildTabContent(BuildContext context, String title) {
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
+
+  final TabBar _tabBar;
+
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: _tabBar,
+    );
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
+}
+
+class _CommunityEventsTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10,
+      padding: const EdgeInsets.all(16),
+      itemCount: communityEvents.length,
       itemBuilder: (context, index) {
-        return Card(
-          margin: const EdgeInsets.all(8.0),
-          child: ListTile(
-            title: Text('$title Event ${index + 1}'),
-            subtitle: Text('Details for $title Event ${index + 1}'),
-          ),
-        );
+        return EventCard(event: communityEvents[index]);
       },
     );
   }
