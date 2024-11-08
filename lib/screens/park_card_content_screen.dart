@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parks/assets/buttons/custom_back_button.dart';
-import 'package:parks/assets/buttons/custom_save_button.dart';
+import 'package:parks/assets/buttons/custom_save_park_button.dart';
 import 'package:parks/models/park.dart';
 import 'package:parks/providers/distance_provider.dart'; // Import the provider
 

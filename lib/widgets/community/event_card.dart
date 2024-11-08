@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parks/assets/buttons/custom_save_event_button.dart';
 import 'package:parks/models/event.dart';
 
 class EventCard extends StatelessWidget {
@@ -23,34 +24,43 @@ class EventCard extends StatelessWidget {
     return Container(
       width: 150,
       margin: const EdgeInsets.only(right: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              event.imageUrl,
-              height: 100,
-              width: 150,
-              fit: BoxFit.cover,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  event.imageUrl,
+                  height: 100,
+                  width: 150,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                event.date,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              Text(
+                event.title,
+                style: Theme.of(context).textTheme.titleSmall,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                event.location,
+                style: Theme.of(context).textTheme.bodySmall,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            event.date,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          Text(
-            event.title,
-            style: Theme.of(context).textTheme.titleSmall,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            event.location,
-            style: Theme.of(context).textTheme.bodySmall,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          Positioned(
+            top: 8,
+            right: 8,
+            child: CustomSaveEventButton(event: event),
           ),
         ],
       ),
@@ -102,10 +112,7 @@ class EventCard extends StatelessWidget {
                       ),
                 ),
               ),
-              IconButton(
-                icon: const Icon(Icons.favorite_border),
-                onPressed: () {},
-              ),
+              CustomSaveEventButton(event: event),
             ],
           ),
           const SizedBox(height: 8),
