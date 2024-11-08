@@ -1,35 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:parks/models/park.dart';
+import 'package:parks/providers/current_location_provider.dart';
 import 'package:parks/util/distance_calculator.dart';
 
-final distanceProvider = FutureProvider.family<String, Park>((ref, park) async {
-  try {
-    // Request location permissions
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return 'location permissions denied';
+final distanceProvider = Provider.family<AsyncValue<String>, Park>((ref, park) {
+  final locationValue = ref.watch(currentLocationProvider);
+
+  return locationValue.when(
+    data: (position) {
+      try {
+        double calculatedDistance = DistanceCalculator.calculateDistance(
+          startLatitude: position.latitude,
+          startLongitude: position.longitude,
+          endLatitude: park.coordinates.latitude,
+          endLongitude: park.coordinates.longitude,
+        );
+
+        return AsyncValue.data(calculatedDistance.toStringAsFixed(2));
+      } catch (e) {
+        return AsyncValue.error(e, StackTrace.current);
       }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return 'location permissions permanently denied';
-    }
-
-    // Get the current position
-    Position currentPosition = await Geolocator.getCurrentPosition();
-
-    double calculatedDistance = DistanceCalculator.calculateDistance(
-      startLatitude: currentPosition.latitude,
-      startLongitude: currentPosition.longitude,
-      endLatitude: park.coordinates.latitude,
-      endLongitude: park.coordinates.longitude,
-    );
-
-    return calculatedDistance.toStringAsFixed(2);
-  } catch (e) {
-    return 'Unable to determine distance';
-  }
+    },
+    loading: () => const AsyncValue.loading(),
+    error: (error, stack) => AsyncValue.error(error, stack),
+  );
 });
