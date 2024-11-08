@@ -34,7 +34,7 @@ class ParkCard extends ConsumerWidget {
           ),
         ),
         elevation: 4,
-        shadowColor: Colors.black.withOpacity(0.4),
+        shadowColor: Colors.black,
         child: Stack(
           children: [
             Column(
