@@ -7,7 +7,7 @@ class ParkService {
   Future<List<Park>> getParks() async {
     try {
       QuerySnapshot querySnapshot =
-          await _firestore.collection('parks-data').get();
+          await _firestore.collection('test-data').get();
 
       // Map Firestore documents to Park models
       return querySnapshot.docs.map((doc) {
