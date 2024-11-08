@@ -16,7 +16,7 @@ final distanceProvider = Provider.family<AsyncValue<String>, Park>((ref, park) {
           endLongitude: park.coordinates.longitude,
         );
 
-        return AsyncValue.data(calculatedDistance.toStringAsFixed(2));
+        return AsyncValue.data(calculatedDistance.toStringAsFixed(1));
       } catch (e) {
         return AsyncValue.error(e, StackTrace.current);
       }

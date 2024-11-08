@@ -27,7 +27,7 @@ class DistanceCalculator {
     double distanceInKm = radiusOfEarthKm * c;
     double distanceInMiles = distanceInKm * kmToMilesConversionFactor;
 
-    return distanceInMiles;
+    return (distanceInMiles * 10).round() / 10;
   }
 
   // Convert degrees to radians
