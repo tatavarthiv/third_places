@@ -8,7 +8,7 @@ class ParkFilters {
   // final List<String> activities;
 
   const ParkFilters({
-    this.maxDistance = 10.0,
+    this.maxDistance = 50.0,
     // Future defaults will go here
   });
 

@@ -74,9 +74,8 @@ class ParkFiltersSheet extends ConsumerWidget {
               Slider(
                 value: filters.maxDistance,
                 min: 1.0,
-                max: 50.0,
-                divisions: 49,
-                label: '${filters.maxDistance.toStringAsFixed(1)} miles',
+                max: 100.0,
+                divisions: 99,
                 onChanged: (value) {
                   ref.read(parkFiltersProvider.notifier).updateDistance(value);
                 },
@@ -85,10 +84,6 @@ class ParkFiltersSheet extends ConsumerWidget {
           ),
 
           // Placeholder for future filter sections
-          // Will be implemented as:
-          // AmenitiesFilterSection(),
-          // OpeningHoursFilterSection(),
-          // ActivityFilterSection(),
 
           const SizedBox(height: 16),
 

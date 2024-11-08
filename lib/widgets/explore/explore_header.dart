@@ -51,7 +51,7 @@ class ExploreHeader extends ConsumerWidget {
                   ),
                 ],
               ),
-              if (filters.maxDistance != 10.0)
+              if (filters.maxDistance != 50.0)
                 Positioned(
                   right: 8,
                   top: 8,
