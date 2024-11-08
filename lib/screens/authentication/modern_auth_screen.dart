@@ -57,6 +57,9 @@ class _ModernAuthScreenState extends State<ModernAuthScreen> {
           'createdAt': FieldValue.serverTimestamp(),
           'isProfileComplete': false,
         });
+
+        // Send email verification
+        await userCredential.user!.sendEmailVerification();
       }
     } on FirebaseAuthException catch (e) {
       setState(() => _errorMessage = _getErrorMessage(e.code));
