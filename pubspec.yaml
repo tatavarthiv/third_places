@@ -43,11 +43,11 @@ dependencies:
   riverpod_annotation: ^2.6.1
 
   # Firebase
-  firebase_auth: ^4.3.0
-  firebase_core: ^2.32.0
-  cloud_firestore: ^4.17.5
-  firebase_database: ^10.1.2
-  firebase_ui_auth: ^1.13.0
+  firebase_auth: ^5.3.2
+  firebase_core: ^3.7.0
+  cloud_firestore: ^5.4.5
+  firebase_database: ^11.1.5
+  firebase_ui_auth: ^1.16.0
 
   # Geolocation
   geolocator: ^13.0.1
