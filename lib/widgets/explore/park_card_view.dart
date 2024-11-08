@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parks/assets/custom_save_button.dart';
+import 'package:parks/assets/buttons/custom_save_button.dart';
 import 'package:parks/models/park.dart';
 import 'package:parks/providers/distance_provider.dart';
 import 'package:parks/screens/park_card_content_screen.dart';

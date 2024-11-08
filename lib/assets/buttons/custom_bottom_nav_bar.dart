@@ -48,7 +48,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               label: 'Community',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark, size: 30),
+              icon: Icon(Icons.favorite, size: 30),
               label: 'Saved',
             ),
             BottomNavigationBarItem(

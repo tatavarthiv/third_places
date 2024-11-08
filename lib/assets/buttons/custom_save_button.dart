@@ -1,3 +1,4 @@
+// custom_save_button.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parks/models/park.dart';
@@ -9,7 +10,7 @@ class CustomSaveParkButton extends ConsumerWidget {
 
   const CustomSaveParkButton({
     super.key,
-    this.size = 18.0,
+    this.size = 24.0,
     required this.park,
   });
 
@@ -18,15 +19,11 @@ class CustomSaveParkButton extends ConsumerWidget {
     final isSaved = ref.watch(savedParksProvider).any((p) => p.id == park.id);
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        shape: BoxShape.circle,
-      ),
-      constraints: const BoxConstraints.tightFor(width: 30, height: 30),
+      constraints: const BoxConstraints.tightFor(width: 35, height: 30),
       child: IconButton(
         icon: Icon(
-          isSaved ? Icons.bookmark : Icons.bookmark_border,
-          color: isSaved ? Colors.amber : Colors.white,
+          isSaved ? Icons.favorite : Icons.favorite_border,
+          color: isSaved ? Colors.red : Colors.white,
           size: size,
         ),
         onPressed: () {
