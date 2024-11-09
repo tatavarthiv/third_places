@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parks/assets/buttons/custom_back_button.dart';
 import 'package:parks/assets/buttons/custom_save_park_button.dart';
 import 'package:parks/models/park.dart';
-import 'package:parks/providers/distance_provider.dart'; // Import the provider
+import 'package:parks/providers/distance_provider.dart'; 
+import 'package:parks/widgets/explore/map_widget.dart'; 
 
 class ParkCardContentScreen extends ConsumerWidget {
   final Park park;
@@ -50,7 +51,8 @@ class ParkCardContentScreen extends ConsumerWidget {
                           Text(
                             park.name,
                             style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
+                                fontSize: 24, 
+                                fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 16),
                           Text(
@@ -64,6 +66,10 @@ class ParkCardContentScreen extends ConsumerWidget {
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 16),
+                          ParkMapWidget(
+                            latitude: park.coordinates.latitude,
+                            longitude: park.coordinates.longitude,
+                          )
                         ],
                       ),
                     ),
