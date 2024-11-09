@@ -67,6 +67,7 @@ class ParkCardContentScreen extends ConsumerWidget {
                           ),
                           const SizedBox(height: 16),
                           ParkMapWidget(
+                            id: park.id,
                             latitude: park.coordinates.latitude,
                             longitude: park.coordinates.longitude,
                           )
