@@ -55,27 +55,45 @@ class ParkMapWidget extends ConsumerWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        height: 250,
+        height: 300, 
         width: 375,
-        child: GoogleMap(
-          initialCameraPosition: CameraPosition(
-            target: LatLng(latitude, longitude),
-            zoom: 13,
-          ),
-          markers: {
-            Marker(
-              markerId: MarkerId(parkId),
-              position: LatLng(latitude, longitude),
-              infoWindow: InfoWindow(
-                title: parkName,
+        child: Stack(
+          children: [
+            GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: LatLng(latitude, longitude),
+                zoom: 13,
+              ),
+              markers: {
+                Marker(
+                  markerId: MarkerId(parkId),
+                  position: LatLng(latitude, longitude),
+                  infoWindow: InfoWindow(
+                    title: parkName,
+                  ),
+                ),
+              },
+              myLocationEnabled: true,
+              zoomControlsEnabled: true,
+            ),
+            // Get Directions Button
+            Positioned(
+              top: 10, 
+              right: 10,
+              child: ElevatedButton(
+                onPressed: () => _launchGoogleMaps(context, ref),
+                child: const Text('Get Directions'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: Colors.blue, 
+                  foregroundColor: Colors.white,
+                ),
               ),
             ),
-          },
-          onTap: (LatLng tappedLocation) {
-            _launchGoogleMaps(context, ref);
-          },
-          myLocationEnabled: true,
-          zoomControlsEnabled: true,
+          ],
         ),
       ),
     );
