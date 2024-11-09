@@ -82,7 +82,6 @@ class ParkMapWidget extends ConsumerWidget {
               right: 10,
               child: ElevatedButton(
                 onPressed: () => _launchGoogleMaps(context, ref),
-                child: const Text('Get Directions'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
                   shape: RoundedRectangleBorder(
@@ -91,6 +90,7 @@ class ParkMapWidget extends ConsumerWidget {
                   backgroundColor: Colors.blue, 
                   foregroundColor: Colors.white,
                 ),
+                child: const Text('Get Directions'),
               ),
             ),
           ],
