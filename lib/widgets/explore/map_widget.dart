@@ -55,7 +55,7 @@ class ParkMapWidget extends ConsumerWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        height: 300, 
+        height: 275, 
         width: 375,
         child: Stack(
           children: [
