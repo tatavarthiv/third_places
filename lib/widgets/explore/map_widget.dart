@@ -5,14 +5,27 @@ import 'package:url_launcher/url_launcher.dart';
 class ParkMapWidget extends StatelessWidget {
   final double latitude;
   final double longitude;
+  final String id;
 
-  const ParkMapWidget({Key? key, required this.latitude, required this.longitude}) : super(key: key);
+  const ParkMapWidget({
+    Key? key,
+    required this.latitude,
+    required this.longitude,
+    required this.id,
+  }) : super(key: key);
 
   // Launch Google Maps
   Future<void> _launchGoogleMaps() async {
-    final url = 'https://www.google.com/maps?q=$latitude,$longitude';
-    if (await canLaunch(url)) {
-      await launch(url);
+    final mapsUrl = Uri(
+      scheme: 'https',
+      host: 'www.google.com',
+      path: '/maps',
+      queryParameters: {
+        'q': '$latitude,$longitude',
+      },
+    );
+    if (await canLaunchUrl(mapsUrl)) {
+      await launchUrl(mapsUrl);
     } else {
       throw 'Could not launch Google Maps';
     }
@@ -26,26 +39,23 @@ class ParkMapWidget extends StatelessWidget {
         height: 250,
         width: 375,
         child: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: LatLng(latitude, longitude),
-          zoom: 13, 
-        ),
-        markers: {
-          Marker(
-            markerId: MarkerId('parkMarker'),
-            position: LatLng(latitude, longitude),
-            infoWindow: InfoWindow(
-              title: 'Park Location',
-            ),
+          initialCameraPosition: CameraPosition(
+            target: LatLng(latitude, longitude),
+            zoom: 13,
           ),
-        },
-        onTap: (LatLng tappedLocation) {
-        _launchGoogleMaps();
-        },
-        myLocationEnabled: true,
-        zoomControlsEnabled: true,
+          markers: {
+            Marker(
+              markerId: MarkerId(id),
+              position: LatLng(latitude, longitude),
+            ),
+          },
+          onTap: (LatLng tappedLocation) {
+            _launchGoogleMaps();
+          },
+          myLocationEnabled: true,
+          zoomControlsEnabled: true,
         ),
-      )      
+      ),
     );
   }
 }
