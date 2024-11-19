@@ -70,6 +70,7 @@ class Park {
         ?.map((reviewData) => Review.fromFirestore(
             reviewData as Map<String, dynamic>))
         .toList();
+        
     var openingHours = (data['opening_hours'] as List<dynamic>?)
         ?.map((hoursData) => OpeningHours.fromFirestore(
             hoursData as Map<String, dynamic>))

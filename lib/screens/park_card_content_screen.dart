@@ -5,6 +5,7 @@ import 'package:parks/assets/buttons/custom_save_park_button.dart';
 import 'package:parks/models/park.dart';
 import 'package:parks/providers/distance_provider.dart'; 
 import 'package:parks/widgets/explore/map_widget.dart'; 
+import 'package:parks/widgets/explore/sports_facilities.dart'; 
 
 class ParkCardContentScreen extends ConsumerWidget {
   final Park park;
@@ -66,6 +67,14 @@ class ParkCardContentScreen extends ConsumerWidget {
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 16),
+
+                          // Sports Facilities Widget
+                          SportsFacilitiesWidget(
+                            sportsFacilities: park.sportsFacilities,
+                          ),
+                          const SizedBox(height: 16),
+
+                          // Google Maps Widget
                           ParkMapWidget(
                             parkId: park.id,
                             parkName: park.name,
