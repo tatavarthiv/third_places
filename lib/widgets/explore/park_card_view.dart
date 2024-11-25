@@ -96,9 +96,9 @@ class ParkCard extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 2),
                       Text(
-                        park.location,
+                        '${park.cityId}, ${park.countyId}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: colorScheme.primary,
                               fontSize: 12,
