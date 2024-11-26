@@ -59,18 +59,26 @@ dependencies:
   # Authentication
   google_sign_in: ^6.2.1
 
-  # Map Widget
-  google_maps_flutter: ^2.2.0
-  url_launcher: ^6.0.10
-
   # Local Storage
   shared_preferences: ^2.3.2
 
+  # Icons
+  font_awesome_flutter: ^10.0.0
+
+  # Weather 
+  http: ^1.2.2
+
+  # Map
+  url_launcher: ^6.1.9
+  google_maps_flutter: ^2.3.0
+
+  intl: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
   riverpod_generator: ^2.3.9
   build_runner: ^2.4.8
+  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

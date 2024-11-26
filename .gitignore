@@ -33,6 +33,17 @@
 /build/
 test_goldens/failures/
 
+# Linux related
+**/linux/flutter/generated_plugin_registrant.cc
+**/linux/flutter/generated_plugins.cmake
+
+# MacOS related
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Windows related
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugins.cmake
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -69,6 +80,7 @@ test_goldens/failures/
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Podfile.lock
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3

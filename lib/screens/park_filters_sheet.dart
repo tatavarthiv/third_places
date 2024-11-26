@@ -74,7 +74,7 @@ class ParkFiltersSheet extends ConsumerWidget {
               Slider(
                 value: filters.maxDistance,
                 min: 1.0,
-                max: 100.0,
+                max: 100000.0,
                 divisions: 99,
                 onChanged: (value) {
                   ref.read(parkFiltersProvider.notifier).updateDistance(value);
