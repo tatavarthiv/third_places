@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class DayOpenAndClose {
@@ -31,28 +30,5 @@ class DayOpenAndClose {
       day: data['day'] as String? ?? 'Unknown', 
       openAndClose: openAndCloseList,
     );
-  }
-}
-
-class OpeningHours {
-  final List<DayOpenAndClose> openingHours;
-
-  OpeningHours({
-    this.openingHours = const [],
-  });
-
-  factory OpeningHours.fromFirestore(Map<String, dynamic> data) {
-    try {
-      var openingHoursList = (data['opening_hours'] as List<dynamic>? ?? []);
-
-      return OpeningHours(
-        openingHours: openingHoursList.map((dayData) {
-          return DayOpenAndClose.fromFirestore(dayData as Map<String, dynamic>);
-        }).toList(),
-
-      );
-    } catch (e) {
-      throw FormatException('Failed to parse opening_hours: $e');
-    }
   }
 }

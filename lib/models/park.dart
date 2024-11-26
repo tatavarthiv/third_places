@@ -8,12 +8,14 @@ import 'package:parks/models/park_details/opening_hours.dart';
 
 class Park {
   final String id;
+  final String cityId;
+  final String countyId;
   final String name;
   final String location;
   final String imageUrl;
   final GeoPoint coordinates;
   final List<Review> reviews;
-  final List<OpeningHours> openingHours;
+  final List<DayOpenAndClose> openingHours;
   final PopularTimes popularTimes;
   final SportsFacilities sportsFacilities;
   final Accessibility accessibility;
@@ -22,6 +24,8 @@ class Park {
 
   Park({
     required this.id,
+    required this.cityId,
+    required this.countyId,
     required this.name,
     required this.location,
     required this.imageUrl,
@@ -38,6 +42,8 @@ class Park {
   factory Park.fromJson(Map<String, dynamic> json) {
     return Park(
       id: json['id'] ?? '',
+      cityId: json['cityId'] ?? '',
+      countyId: json['countyId'] ?? '',
       name: json['name'] ?? 'Unknown Park',
       location: json['location'] ?? '',
       imageUrl: json['imageUrl'] ?? 'https://st3.depositphotos.com/1186248/14351/i/450/depositphotos_143511907-stock-photo-not-available-rubber-stamp.jpg',
@@ -70,11 +76,10 @@ class Park {
         ?.map((reviewData) => Review.fromFirestore(
             reviewData as Map<String, dynamic>))
         .toList();
-        
+      
     var openingHours = (data['opening_hours'] as List<dynamic>?)
-        ?.map((hoursData) => OpeningHours.fromFirestore(
-            hoursData as Map<String, dynamic>))
-        .toList();
+      ?.map((dayData) => DayOpenAndClose.fromFirestore(dayData as Map<String, dynamic>))
+      .toList();
 
     var popularTimes = PopularTimes.fromFirestore(
           data['popular_times'] as Map<String, dynamic>
@@ -96,25 +101,22 @@ class Park {
     var longitude = data['location']?['longitude'] as double?;
     var latitude = data['location']?['latitude'] as double?;
     
-    GeoPoint coordinates;
-    if (longitude != null && latitude != null) {
-      coordinates = GeoPoint(latitude, longitude);
-    } else {
-      coordinates = GeoPoint(0.0, 0.0);
-    }
+    final GeoPoint coordinates = (latitude != null && longitude != null) ? GeoPoint(latitude, longitude) : const GeoPoint(0.0, 0.0);
       
     return Park(
       id: data['id'] ?? '',
+      cityId: data['cityId'] ?? '',
+      countyId: data['countyId'] ?? '',
       name: data['name'] ?? 'Unknown Park',
       location: location ?? '',
       imageUrl: data['imageUrl'] ?? 'https://st3.depositphotos.com/1186248/14351/i/450/depositphotos_143511907-stock-photo-not-available-rubber-stamp.jpg',
       coordinates: coordinates,
       reviews: reviews ?? [],
       openingHours: openingHours ?? [],
-      popularTimes: popularTimes ?? PopularTimes(),
-      sportsFacilities: sportsFacilities ?? SportsFacilities(),
-      communityFacilities: communityFacilities ?? CommunityFacilities(),
-      accessibility: accessibility ?? Accessibility(),
+      popularTimes: popularTimes,
+      sportsFacilities: sportsFacilities,
+      communityFacilities: communityFacilities,
+      accessibility: accessibility,
       other: List<String>.from(data['Other'] ?? []),
     );
   }

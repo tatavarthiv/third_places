@@ -11,12 +11,12 @@ class ParkMapWidget extends ConsumerWidget {
   final String parkName;
 
   const ParkMapWidget({
-    Key? key,
+    super.key,
     required this.latitude,
     required this.longitude,
     required this.parkId,
     required this.parkName,
-  }) : super(key: key);
+  });
 
   // Launch Google Maps URL with directions from current location to park 
   Future<void> _launchGoogleMaps(BuildContext context, WidgetRef ref) async {
@@ -54,48 +54,68 @@ class ParkMapWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: Container(
-        height: 275, 
-        width: 375,
-        child: Stack(
-          children: [
-            GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: LatLng(latitude, longitude),
-                zoom: 13,
-              ),
-              markers: {
-                Marker(
-                  markerId: MarkerId(parkId),
-                  position: LatLng(latitude, longitude),
-                  infoWindow: InfoWindow(
-                    title: parkName,
-                  ),
-                ),
-              },
-              myLocationEnabled: true,
-              zoomControlsEnabled: true,
+      child: Column(
+        children: [
+          Align(
+          alignment: Alignment.centerLeft, // Align the text to the left
+          child: Text(
+            'Map',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            // Get Directions Button
-            Positioned(
-              top: 10, 
-              right: 10,
+          )),
+          const SizedBox(height: 16),
+
+          // Google Map widget
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16.0),
+            child: Container(
+              height: 275, 
+              width: double.infinity, 
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(latitude, longitude),
+                  zoom: 13,
+                ),
+                markers: {
+                  Marker(
+                    markerId: MarkerId(parkId),
+                    position: LatLng(latitude, longitude),
+                    infoWindow: InfoWindow(
+                      title: parkName,
+                    ),
+                  ),
+                },
+                myLocationEnabled: true,
+                zoomControlsEnabled: true,
+              ),
+            )
+          ),
+          
+          // Get Directions Button wrapped in a Container to match map width
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10), 
+            child: Container(
+              width: double.infinity,
               child: ElevatedButton(
                 onPressed: () => _launchGoogleMaps(context, ref),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  backgroundColor: Colors.blue, 
-                  foregroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.secondaryContainer, 
+                  foregroundColor: Theme.of(context).colorScheme.primary,
                 ),
                 child: const Text('Get Directions'),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+
