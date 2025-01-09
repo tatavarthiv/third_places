@@ -24,6 +24,9 @@ class ExploreHeader extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
+        onChanged: (query) {
+          ref.read(parkFiltersProvider.notifier).updateSearchQuery(query);
+        },
         decoration: InputDecoration(
           hintText: 'Find parks',
           prefixIcon: Icon(
@@ -96,3 +99,4 @@ class ExploreHeader extends ConsumerWidget {
     );
   }
 }
+
