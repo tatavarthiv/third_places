@@ -30,7 +30,64 @@ class FilteredParksList extends ConsumerWidget {
               distanceValue.whenData((distanceStr) {
                 final distance = double.tryParse(distanceStr);
                 if (distance != null && distance <= filters.maxDistance) {
-                  parksWithDistances.add(MapEntry(distance, park));
+                  // Check if the park satisfies the sports and community facilities filters
+                  final hasRequiredSportsFacilities = filters.sportsFacilities.entries.every((facility) {
+                    if (facility.value) {
+                      switch (facility.key) {
+                        case 'Baseball':
+                          return park.sportsFacilities.hasBaseball;
+                        case 'Tennis':
+                          return park.sportsFacilities.hasTennis;
+                        case 'Basketball':
+                          return park.sportsFacilities.hasBasketball;
+                        case 'Volleyball':
+                          return park.sportsFacilities.hasVolleyball;
+                        case 'Golf':
+                          return park.sportsFacilities.hasGolf;
+                        case 'Fitness Center':
+                          return park.sportsFacilities.hasFitnessCenter;
+                        case 'Skateboarding':
+                          return park.sportsFacilities.hasSkateboarding;
+                        default:
+                          return true;
+                      }
+                    }
+                    return true;
+                  });
+
+                  final hasRequiredCommunityFacilities = filters.communityFacilities.entries.every((facility) {
+                    if (facility.value) {
+                      switch (facility.key) {
+                        case 'Restroom':
+                          return park.communityFacilities.hasRestroom;
+                        case 'Picnic Table':
+                          return park.communityFacilities.hasPicnicTable;
+                        case 'Grill':
+                          return park.communityFacilities.hasGrill;
+                        case 'Playground':
+                          return park.communityFacilities.hasPlayground;
+                        case 'Services':
+                          return park.communityFacilities.hasServices;
+                        case 'RV Camping':
+                          return park.communityFacilities.hasRVCamping;
+                        case 'Parking':
+                          return park.communityFacilities.hasParking;
+                        case 'Trail Path':
+                          return park.communityFacilities.hasTrailPath;
+                        case 'Camping Site':
+                          return park.communityFacilities.hasCampingSite;
+                        case 'Dog Park':
+                          return park.communityFacilities.hasDogPark;
+                        default:
+                          return true;
+                      }
+                    }
+                    return true;
+                  });
+
+                  if (hasRequiredSportsFacilities && hasRequiredCommunityFacilities) {
+                    parksWithDistances.add(MapEntry(distance, park));
+                  }
                 }
               });
             }
@@ -41,13 +98,20 @@ class FilteredParksList extends ConsumerWidget {
             // If no parks match the filter criteria
             if (parksWithDistances.isEmpty) {
               return const Center(
-                child: Text('No parks found within the selected distance'),
+                child: Text('No parks found matching the selected filters'),
               );
             }
 
             // Extract just the parks for display
-            final filteredParks =
-                parksWithDistances.map((e) => e.value).toList();
+            final filteredParks = parksWithDistances
+              .map((e) => e.value)
+              .where((park) {
+                // Check if the park name matches the search query
+                final query = filters.searchQuery.toLowerCase();
+                return query.isEmpty || park.name.toLowerCase().contains(query);
+              })
+              .toList();
+
 
             return ParksCardList(parks: filteredParks);
           },

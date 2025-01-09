@@ -19,12 +19,12 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.white, // Background color of the BottomNavigationBar
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 10,
-            offset: Offset(0, -2), // Shadow position
+            offset: Offset(0, -2),
           ),
         ],
         borderRadius: BorderRadius.only(
@@ -59,8 +59,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           elevation: 10,
           type: BottomNavigationBarType.fixed,
           currentIndex: widget.selectedIndex,
-          onTap: widget.onItemTapped,
-          iconSize: 30.0, // Set the default icon size
+          onTap: (index) {
+            // Prevent re-triggering the onTap for the same selected index
+            if (index != widget.selectedIndex) {
+              widget.onItemTapped(index);
+            }
+          },
+          iconSize: 30.0,
         ),
       ),
     );
